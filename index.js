@@ -1,5 +1,6 @@
 import express from "express";
 import urlRoute from "./routes/url.js";
+import userRoute from "./routes/user.js";
 import staticRoute from "./routes/staticRouter.js";
 import connectionToMongoDB from "./connection.js";
 
@@ -15,6 +16,7 @@ app.use(express.urlencoded({ extended: false }));
 
 app.use("/", staticRoute);
 app.use("/url", urlRoute);
+app.use("/user", userRoute);
 
 app.listen(PORT, () => {
   console.log(`Server is listening at port ${PORT}`);
