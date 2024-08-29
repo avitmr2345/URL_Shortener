@@ -1,6 +1,6 @@
 import express from "express";
 import urlRoute from "./routes/url.js";
-import URL from "./models/url.js";
+import staticRoute from "./routes/staticRouter.js";
 import connectionToMongoDB from "./connection.js";
 
 const app = express();
@@ -11,20 +11,10 @@ connectionToMongoDB("mongodb://127.0.0.1:27017/short-url").then(() =>
 );
 
 app.use(express.json());
-app.use("/url", urlRoute);
+app.use(express.urlencoded({ extended: false }));
 
-app.get("/:shortId", async (req, res) => {
-  const shortId = req.params.shortId;
-  const entry = await URL.findOneAndUpdate(
-    { shortId },
-    {
-      $push: {
-        visitHistory: { timestamp: Date.now() },
-      },
-    }
-  );
-  return res.redirect(entry.redirectURL);
-});
+app.use("/", staticRoute);
+app.use("/url", urlRoute);
 
 app.listen(PORT, () => {
   console.log(`Server is listening at port ${PORT}`);
