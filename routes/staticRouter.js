@@ -7,4 +7,12 @@ router.get("/", async (req, res) => {
   return res.render("home.ejs", { urls: allUrls });
 });
 
+router.get("/signup", async (req, res) => {
+  return res.render("signup.ejs");
+});
+
+router.get("/login", async (req, res) => {
+  return res.render("login.ejs");
+});
+
 export default router;
