@@ -11,4 +11,12 @@ async function AccessToLoggedInUserOnly(req, res, next) {
   next();
 }
 
-export default AccessToLoggedInUserOnly;
+async function checkAuth(req, res, next) {
+  const userUid = req.cookies?.uid;
+  const user = getUser(userUid);
+
+  req.user = user;
+  next();
+}
+
+export { AccessToLoggedInUserOnly, checkAuth };

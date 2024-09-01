@@ -3,7 +3,7 @@ import urlRoute from "./routes/url.js";
 import userRoute from "./routes/user.js";
 import staticRoute from "./routes/staticRouter.js";
 import connectionToMongoDB from "./connection.js";
-import AccessToLoggedInUserOnly from "./middlewares/auth.js";
+import { AccessToLoggedInUserOnly, checkAuth } from "./middlewares/auth.js";
 import cookieParser from "cookie-parser";
 
 const app = express();
@@ -17,7 +17,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 
-app.use("/", staticRoute);
+app.use("/", checkAuth, staticRoute);
 app.use("/url", AccessToLoggedInUserOnly, urlRoute);
 app.use("/user", userRoute);
 
