@@ -2,11 +2,12 @@ import User from "../models/user.js";
 import { setUser } from "../service/auth.js";
 
 async function handleUserSignUP(req, res) {
-  const { name, email, password } = req.body;
+  const { name, email, password, role } = req.body;
   await User.create({
     name,
     email,
     password,
+    role,
   });
   return res.redirect("/");
 }
@@ -19,7 +20,7 @@ async function handleUserLogin(req, res) {
       error: "Invalid Username or Password",
     });
   const token = setUser(user);
-  res.cookie("uid", token);
+  res.cookie("token", token);
   return res.redirect("/");
 }
 
